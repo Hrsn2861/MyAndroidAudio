@@ -19,6 +19,7 @@ public class MathView extends View {
     private Paint mHelpPrint;
     private Paint mPaint;
     private Path mPath;
+    private int BUFFERSIZE = 640;
 
     public MathView(Context context) {
         this(context,null);
@@ -48,10 +49,21 @@ public class MathView extends View {
 
     }
 
-    byte[] mydata = new byte[640];
+    float[] mydata = new float[BUFFERSIZE];
 
-    public void setData(byte[] data) {
-        mydata = data;
+    public void setData(float[] data) {
+        int length = Math.min(data.length,BUFFERSIZE);
+        for(int i=0;i<length;i++) {
+            mydata[i] = data[i]*1000;
+        }
+        invalidate();
+    }
+
+    public void setData(double[] data) {
+        int length = Math.min(data.length,BUFFERSIZE);
+        for(int i=0;i<length;i++) {
+            mydata[i] = (float) data[i]*10000;
+        }
         invalidate();
     }
 
